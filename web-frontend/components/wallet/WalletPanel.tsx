@@ -46,7 +46,10 @@ const WalletPanel = ({ isOpen, onClose }: WalletPanelProps) => {
     let url: string;
     if (type === 'solana') {
       url = `https://solscan.io/account/${address}`;
-    } else {
+    } else if (type === 'aleo') {
+      url = `https://explorer.provable.com/address/${address}`;
+    }
+     else {
       // Default to Etherscan, but could be chain-specific
       const explorerBase =
         chainId === 42161
