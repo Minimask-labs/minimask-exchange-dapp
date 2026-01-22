@@ -26,6 +26,26 @@ export const mockTokens: Token[] = [
     balance: '100.00',
     usdValue: '50.00'
   },
+  {
+    symbol: 'USDT',
+    name: 'Tether USD',
+    icon: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/tokens/usdt.svg',
+    chainId: 'aleo',
+    address: 'aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqf4xcx7k7',
+    decimals: 6,
+    balance: '2500.00',
+    usdValue: '2500.00'
+  },
+  {
+    symbol: 'USDCX',
+    name: 'USD Coin',
+    icon: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/tokens/usdc.svg',
+    chainId: 'aleo',
+    address: 'aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqf4x7k7ooo',
+    decimals: 6,
+    balance: '1200.00',
+    usdValue: '1200.00'
+  },
 
   // Ethereum tokens
   {
