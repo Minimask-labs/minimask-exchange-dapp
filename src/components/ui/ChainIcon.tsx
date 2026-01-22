@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
 
 interface ChainIconProps {
-  chainId: number | string;
+  chainId?: number | string;
+  src?: string;
   name?: string;
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -36,9 +37,9 @@ const chainNames: Record<string | number, string> = {
   solana: "Solana",
 };
 
-const ChainIcon = ({ chainId, name, size = "md", className }: ChainIconProps) => {
-  const iconUrl = chainIcons[chainId];
-  const chainName = name || chainNames[chainId] || String(chainId);
+const ChainIcon = ({ chainId, src, name, size = "md", className }: ChainIconProps) => {
+  const iconUrl = src || (chainId ? chainIcons[chainId] : undefined);
+  const chainName = name || (chainId ? chainNames[chainId] : undefined) || String(chainId || "");
 
   return (
     <div
