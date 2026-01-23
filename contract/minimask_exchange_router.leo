@@ -1,10 +1,15 @@
+import credits.aleo;
+
 // Aleo Jumper Router Contract
 // This contract handles token swaps with platform fee collection
 // It takes a fee and forwards the remaining amount to a merchant (DEX or Bridge)
 
-program aleo_jumper_router.aleo {
+program minimask_exchange_router.aleo {
+        @admin(address="aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8")
+    async constructor() {}
+
     // Treasury address where platform fees are collected
-    const TREASURY: address = aleo1jumpertreasury0000000000000000000000000000000000000000000;
+    const TREASURY: address = aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
     
     // Minimum fee in basis points (1 = 0.01%)
     const MIN_FEE_BPS: u64 = 10u64;
@@ -46,6 +51,7 @@ program aleo_jumper_router.aleo {
 
         // Transfer fee to treasury and net amount to merchant
         // Using credits.aleo for native ALEO transfers
+        // Note: In a real app, you'd call 'token.aleo/transfer_public'
         let f1: Future = credits.aleo/transfer_public(TREASURY, fee_amount);
         let f2: Future = credits.aleo/transfer_public(merchant_address, net_amount);
 

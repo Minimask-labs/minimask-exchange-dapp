@@ -1,9 +1,14 @@
+import credits.aleo;
+
 // Aleo Jumper Merchants Contract
 // Handles merchant liquidity registration and instant swaps
 
-program aleo_jumper_merchants.aleo {
+program minimask_exchange_merchants.aleo {
+        @admin(address="aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8")
+    async constructor() {}
+
     // Treasury for fee collection
-    const TREASURY: address = aleo1jumpertreasury0000000000000000000000000000000000000000000;
+    const TREASURY: address = aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
     
     // Unstaking period in blocks (72 hours ~ 25920 blocks at 10s/block)
     const UNSTAKING_PERIOD: u32 = 25920u32;
