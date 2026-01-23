@@ -19,7 +19,7 @@ program minimask_exchange.aleo {
     const TREASURY: address = aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
     
     // Bridge provider addresses (to be updated with real bridge addresses)
-    const VERULINK_BRIDGE: address = aleo1verulink00000000000000000000000000000000000000000000000000;
+    const VERULINK_BRIDGE: address = aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
     
     // Fee constants 
     // Minimum fee in basis points (1 = 0.01%)
