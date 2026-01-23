@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from "react";
-import { WagmiProvider, createConfig, http } from "wagmi";
+import { WagmiProvider, http } from "wagmi";
 import { mainnet, arbitrum, optimism, polygon, base, bsc, avalanche } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider, darkTheme, getDefaultConfig } from "@rainbow-me/rainbowkit";
@@ -10,6 +10,9 @@ import { ConnectionProvider, WalletProvider as SolanaWalletProvider } from "@sol
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adapter-wallets";
 import "@solana/wallet-adapter-react-ui/styles.css";
+
+// Aleo imports
+import { AleoWalletProviderWrapper } from "./AleoWalletProvider";
 
 const queryClient = new QueryClient();
 
@@ -63,7 +66,9 @@ const WalletProviderWrapper = ({ children }: WalletProviderProps) => {
           <ConnectionProvider endpoint={endpoint}>
             <SolanaWalletProvider wallets={wallets} autoConnect>
               <WalletModalProvider>
-                {children}
+                <AleoWalletProviderWrapper>
+                  {children}
+                </AleoWalletProviderWrapper>
               </WalletModalProvider>
             </SolanaWalletProvider>
           </ConnectionProvider>
