@@ -1,1 +1,7 @@
 project_id = "buwblxgcrapoxlfnfyap"
+
+[functions.lifi-quote]
+verify_jwt = false
+
+[functions.aleo-bridge]
+verify_jwt = false

@@ -64,9 +64,62 @@ export interface SwapSettings {
 
 export interface ConnectedWallet {
   address: string;
+<<<<<<< HEAD:web-frontend/types/index.ts
   type: 'evm' | 'solana' | 'aleo';
+=======
+  type: "evm" | "solana" | "aleo";
+>>>>>>> 8f0b22e8b8140bf0dc3b0af1e7934cc43964e373:src/types/index.ts
   chainId?: number | string;
   balance?: string;
   name?: string;
   icon?: string | null | undefined;
+}
+
+// Aleo-specific types
+export interface AleoChain {
+  id: "aleo";
+  name: string;
+  network: "mainnet" | "testnet" | "testnetbeta";
+  icon: string;
+}
+
+export interface AleoToken {
+  symbol: string;
+  name: string;
+  icon: string;
+  programId: string;
+  decimals: number;
+  balance?: string;
+  usdValue?: string;
+}
+
+export interface AleoBridgeRoute {
+  id: string;
+  provider: string;
+  fromChain: string;
+  toChain: string;
+  fromToken: string;
+  toToken: string;
+  fromAmount: string;
+  toAmount: string;
+  fees: {
+    platformFee: string;
+    bridgeFee: string;
+    gasFee: string;
+    totalFee: string;
+  };
+  estimatedTime: string;
+  steps: Array<{
+    type: string;
+    provider: string;
+    action?: string;
+  }>;
+}
+
+export interface MerchantInfo {
+  address: string;
+  name: string;
+  liquidity: string;
+  feeMarkupBps: number;
+  active: boolean;
 }
