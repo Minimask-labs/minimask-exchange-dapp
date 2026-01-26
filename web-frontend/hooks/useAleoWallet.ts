@@ -1,6 +1,8 @@
-import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
+// import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
+import { useWallet  } from '@provablehq/aleo-wallet-adaptor-react';
+
 import { useCallback, useState } from "react";
-import { Transaction, WalletAdapterNetwork } from "@demox-labs/aleo-wallet-adapter-base";
+// import { Transaction, WalletAdapterNetwork } from "@demox-labs/aleo-wallet-adapter-base";
 
 // Platform fee in basis points (50 = 0.5%)
 const PLATFORM_FEE_BPS = 50;
@@ -21,15 +23,14 @@ export interface AleoBridgeParams {
 
 export const useAleoWalletHook = () => {
   const {
-    publicKey,
     wallet,
     connected,
     connecting,
     connect,
     disconnect,
-    requestTransaction,
-    requestRecordPlaintexts,
     transactionStatus,
+    address,
+    network
   } = useWallet();
 
   const [isExecuting, setIsExecuting] = useState(false);
@@ -37,80 +38,80 @@ export const useAleoWalletHook = () => {
 
   // Execute a swap through the Jumper router contract
   const executeSwap = useCallback(async (params: AleoSwapParams) => {
-    if (!requestTransaction || !publicKey) {
-      throw new Error("Aleo wallet not connected");
-    }
+    // if (!requestTransaction || !publicKey) {
+    //   throw new Error("Aleo wallet not connected");
+    // }
 
     setIsExecuting(true);
     try {
       // Convert amount to u64 (microcredits)
       const amountMicrocredits = Math.floor(parseFloat(params.amount) * 1_000_000);
       
-      const transaction: Transaction = {
-        address: publicKey,
-        chainId: WalletAdapterNetwork.TestnetBeta,
+      const transaction = {
+        address: address,
+        chainId: network,
         transitions: [
           {
-            program: params.programId || "aleo_jumper_router.aleo",
-            functionName: "swap_with_fee",
+            program: params.programId || 'aleo_jumper_router.aleo',
+            functionName: 'swap_with_fee',
             inputs: [
               `${amountMicrocredits}u64`,
               params.merchantAddress,
-              `${PLATFORM_FEE_BPS}u64`,
-            ],
-          },
+              `${PLATFORM_FEE_BPS}u64`
+            ]
+          }
         ],
         fee: 100000, // 0.1 ALEO for network gas
-        feePrivate: false,
+        feePrivate: false
       };
 
-      const result = await requestTransaction(transaction);
-      setLastTxId(result);
-      return result;
+      // const result = await requestTransaction(transaction);
+      // setLastTxId(result);
+      // return result;
     } finally {
       setIsExecuting(false);
     }
-  }, [publicKey, requestTransaction]);
+  }, []);
 
   // Execute a bridge operation through the router
   const executeBridge = useCallback(async (params: AleoBridgeParams) => {
-    if (!requestTransaction || !publicKey) {
-      throw new Error("Aleo wallet not connected");
-    }
+    // if (!requestTransaction || !publicKey) {
+    //   throw new Error("Aleo wallet not connected");
+    // }
 
     setIsExecuting(true);
     try {
       const amountMicrocredits = Math.floor(parseFloat(params.amount) * 1_000_000);
       
       // Bridge transaction with destination memo
-      const transaction: Transaction = {
-        address: publicKey,
-        chainId: WalletAdapterNetwork.TestnetBeta,
+      const transaction = {
+        address: address,
+        chainId: network,
         transitions: [
           {
-            program: "aleo_jumper_bridge.aleo",
-            functionName: "bridge_with_fee",
+            program: 'aleo_jumper_bridge.aleo',
+            functionName: 'bridge_with_fee',
             inputs: [
               `${amountMicrocredits}u64`,
               `${PLATFORM_FEE_BPS}u64`,
               // Destination chain encoded as field
               `${hashString(params.destinationChain)}field`,
               // Destination address encoded (first 32 chars for demo)
-              `${hashString(params.destinationAddress.slice(0, 32))}field`,
-            ],
-          },
+              `${hashString(params.destinationAddress.slice(0, 32))}field`
+            ]
+          }
         ],
         fee: 150000, // Higher fee for bridge operations
-        feePrivate: false,
+        feePrivate: false
       };
 
-      const result = await requestTransaction(transaction);
-      setLastTxId(result);
-      return result;
+      // const result = await requestTransaction(transaction);
+      // setLastTxId(result);
+      // return result;
     } finally {
       setIsExecuting(false);
     }
-  }, [publicKey, requestTransaction]);
+  }, []);
 
   // Get transaction status
   const getTransactionStatus = useCallback(async (txId: string) => {
@@ -122,17 +123,16 @@ export const useAleoWalletHook = () => {
 
   // Get wallet records (for viewing balances)
   const getRecords = useCallback(async (programId: string) => {
-    if (!requestRecordPlaintexts) {
-      throw new Error("Wallet does not support record requests");
-    }
-    const records = await requestRecordPlaintexts(programId);
-    return records.filter(record => !record.spent);
-  }, [requestRecordPlaintexts]);
+    // if (!requestRecordPlaintexts) {
+    //   throw new Error("Wallet does not support record requests");
+    // }
+    // const records = await requestRecordPlaintexts(programId);
+    // return records.filter(record => !record.spent);
+  }, []);
 
   return {
     // Connection state
-    publicKey,
-    wallet,
+     wallet,
     connected,
     connecting,
     connect,

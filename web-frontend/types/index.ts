@@ -64,11 +64,7 @@ export interface SwapSettings {
 
 export interface ConnectedWallet {
   address: string;
-<<<<<<< HEAD:web-frontend/types/index.ts
-  type: 'evm' | 'solana' | 'aleo';
-=======
   type: "evm" | "solana" | "aleo";
->>>>>>> 8f0b22e8b8140bf0dc3b0af1e7934cc43964e373:src/types/index.ts
   chainId?: number | string;
   balance?: string;
   name?: string;
