@@ -71,7 +71,7 @@ const TokenSelectorModal = ({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-[480px] bg-card border-minimask-border p-0 gap-0">
         <DialogHeader className="p-4 pb-0">
-          <DialogTitle className="text-lg font-semibold">{title}</DialogTitle>
+          <DialogTitle className="text-lg font-semibold">iiii{title}</DialogTitle>
         </DialogHeader>
 
         {/* Search */}

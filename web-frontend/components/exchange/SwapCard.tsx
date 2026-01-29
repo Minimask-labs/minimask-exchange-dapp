@@ -22,7 +22,7 @@ import {
   mockExchanges
 } from '@/data/mockData';
 import { Token, SwapSettings, SwapRoute } from '@/types';
-import { TokenSelectorModal, SettingsPanel } from '@/components/exchange';
+import { TokenSelectorModalTwo, SettingsPanel } from '@/components/exchange';
 import { SwapReviewModal } from '@/components/exchange/SwapReviewModal';
 import { useLifi } from '@/hooks/useLifi';
 import { useWallets } from '@/hooks/useWallets';
@@ -55,7 +55,7 @@ const SwapCard = () => {
   const [showAllRoutes, setShowAllRoutes] = useState(false);
 
   const { getRoutes, isLoading, error } = useLifi();
-  const { evmAddress, isAnyWalletConnected } = useWallets();
+  const { evmAddress, isAnyWalletConnected,aleoTokenList } = useWallets();
   const { executeSwap } = useSwapExecution();
   const { openConnectModal } = useConnectModal();
   const debouncedAmount = useDebounce(amount, 500);
@@ -92,7 +92,7 @@ const SwapCard = () => {
     settings.slippage,
     getRoutes
   ]);
-
+console.log('aleoTokenList',aleoTokenList)
   useEffect(() => {
     fetchRoutes();
   }, [fetchRoutes]);
@@ -416,7 +416,7 @@ const SwapCard = () => {
       </GlassCard>
 
       {/* Token Selector Modals */}
-      <TokenSelectorModal
+      <TokenSelectorModalTwo
         isOpen={isFromTokenModalOpen}
         onClose={() => setIsFromTokenModalOpen(false)}
         onSelect={setFromToken}
@@ -424,7 +424,7 @@ const SwapCard = () => {
         title="Exchange from"
       />
 
-      <TokenSelectorModal
+      <TokenSelectorModalTwo
         isOpen={isToTokenModalOpen}
         onClose={() => setIsToTokenModalOpen(false)}
         onSelect={setToToken}

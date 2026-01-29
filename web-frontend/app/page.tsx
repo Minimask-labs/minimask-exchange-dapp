@@ -23,7 +23,7 @@ import {
   mockExchanges
 } from '@/data/mockData';
 import { Token, SwapSettings, SwapRoute } from '@/types';
-import { TokenSelectorModal, SettingsPanel } from '@/components/exchange';
+import { TokenSelectorModalTwo, SettingsPanel } from '@/components/exchange';
 
 const defaultSettings: SwapSettings = {
   routePriority: 'best',
@@ -289,7 +289,7 @@ export default function Home() {
       </GlassCard>
 
       {/* Token Selector Modals */}
-      <TokenSelectorModal
+      <TokenSelectorModalTwo
         isOpen={isFromTokenModalOpen}
         onClose={() => setIsFromTokenModalOpen(false)}
         onSelect={setFromToken}
@@ -297,7 +297,7 @@ export default function Home() {
         title="Exchange from"
       />
 
-      <TokenSelectorModal
+      <TokenSelectorModalTwo
         isOpen={isToTokenModalOpen}
         onClose={() => setIsToTokenModalOpen(false)}
         onSelect={setToToken}
