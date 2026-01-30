@@ -80,15 +80,15 @@ const SwapCard = () => {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const { aleoAddress, isAnyWalletConnected, aleoTokenList } = useWallets();
-  const { openConnectModal } = useConnectModal();
+  // const { openConnectModal } = useConnectModal();
   const debouncedAmount = useDebounce(amount, 500);
 
-  const [fromToken, setFromToken] = useState(null);
-  const [toToken, setToToken] = useState(null);
-  const [settings, setSettings] = useState<SwapSettings>({} as SwapSettings);
+  const [fromToken, setFromToken] = useState<any>(null);
+  const [toToken, setToToken] = useState<any>(null);
+  // const [settings, setSettings] = useState<SwapSettings>({} as SwapSettings);
 
     const handleConnect = async () => {
-      if (wallet) {
+      if (wallet && network) {
         await connect(network);
       }
     };
