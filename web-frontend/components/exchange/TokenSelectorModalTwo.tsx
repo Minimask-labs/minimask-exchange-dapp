@@ -42,7 +42,7 @@ const TokenBalance = ({
   ) => Promise<string>;
 }) => {
   const [balance, setBalance] = useState('...');
-
+ 
   useEffect(() => {
     let isMounted = true;
     const fetchBalance = async () => {
@@ -187,7 +187,7 @@ const TokenSelectorModalTwo = ({
           </div>
 
           <ScrollArea className="flex-1 h-[400px]">
-            <div className="p-2">
+            <div className="p-2 flex flex-col gap-2">
               {aleoTokenList?.data?.length === 0 ? (
                 <div className="text-center text-muted-foreground py-8">
                   No tokens found

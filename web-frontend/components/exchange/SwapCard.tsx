@@ -19,6 +19,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { toast } from 'sonner';
 import { AleoNetworkClient } from '@provablehq/sdk';
+import { useWallet } from '@provablehq/aleo-wallet-adaptor-react';
 
 const networkClient = new AleoNetworkClient(
   'https://api.explorer.provable.com/v2'
@@ -69,8 +70,9 @@ const TokenBalance = ({
 };
 
 const SwapCard = () => {
-  const [amount, setAmount] = useState('100');
-  const [toAmount, setToAmount] = useState('100');
+  const [amount, setAmount] = useState('0');
+  const [toAmount, setToAmount] = useState('0');
+  const { connect, wallet, network } = useWallet();
 
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
   const [isToTokenModalOpen, setIsToTokenModalOpen] = useState(false);
@@ -84,6 +86,12 @@ const SwapCard = () => {
   const [fromToken, setFromToken] = useState(null);
   const [toToken, setToToken] = useState(null);
   const [settings, setSettings] = useState<SwapSettings>({} as SwapSettings);
+
+    const handleConnect = async () => {
+      if (wallet) {
+        await connect(network);
+      }
+    };
 
   useEffect(() => {
     if (aleoTokenList?.data && fromToken === null && toToken === null) {
@@ -155,11 +163,12 @@ const SwapCard = () => {
       return;
     }
     toast.info('Executing swap on Aleo network...');
+    console.log('Executing swap on Aleo network...', fromToken, toToken);
     // TODO: Implement actual Aleo swap transaction logic here
     // This will likely involve using the Aleo wallet adapter to request a transaction
   };
 
-                  const aleoChain =
+    const aleoChain =
                     'https://assets.coingecko.com/coins/images/27916/standard/secondary-icon-dark.png?1726770428"';
   // const fromChainName =
   //   mockChains.find((c) => c.id === fromToken?.chainId)?.name || 'Select Chain';
@@ -188,7 +197,7 @@ const SwapCard = () => {
         {/* FROM */}
         <div className="p-4 rounded-xl bg-secondary mb-2">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-muted-foreground">Send</span>
+            <span className="text-sm text-red">Send</span>
             {fromToken && aleoAddress && (
               <TokenBalance
                 programId={fromToken?.address}
@@ -224,11 +233,11 @@ const SwapCard = () => {
               <ChevronDown className="w-5 h-5 text-muted-foreground" />
             </button>
           </div>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-black mt-1">
             ≈ $
-            {(
-              parseFloat(amount || '0') * (fromToken?.usdValue || 0)
-            ).toFixed(2)}
+            {(parseFloat(amount || '0') * (fromToken?.usdValue || 0)).toFixed(
+              2
+            )}
           </p>
         </div>
 
@@ -244,7 +253,7 @@ const SwapCard = () => {
         {/* TO */}
         <div className="p-4 rounded-xl bg-secondary mb-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-muted-foreground">Receive</span>
+            <span className="text-sm text-black">Receive</span>
           </div>
           <div className="flex items-center gap-4">
             <input
@@ -267,14 +276,15 @@ const SwapCard = () => {
                   networkName={'aleo'}
                 />
               ) : null}
-              <span className="font-medium">
-                {toToken?.symbol || 'Select'}
-              </span>
+              <span className="font-medium">{toToken?.symbol || 'Select'}</span>
               <ChevronDown className="w-5 h-5 text-muted-foreground" />
             </button>
           </div>
           <p className="text-sm text-muted-foreground mt-1">
-            ≈ ${(parseFloat(toAmount || '0') * (toToken?.usdValue || 0)).toFixed(2)}
+            ≈ $
+            {(parseFloat(toAmount || '0') * (toToken?.usdValue || 0)).toFixed(
+              2
+            )}
           </p>
         </div>
 
@@ -282,7 +292,7 @@ const SwapCard = () => {
           <GradientButton
             fullWidth
             size="lg"
-            onClick={() => openConnectModal?.()}
+            onClick={() => handleConnect?.()}
           >
             <Wallet className="w-4 h-4 mr-2" />
             Connect Wallet
@@ -320,12 +330,12 @@ const SwapCard = () => {
         aleoNetwork="mainnet"
       />
 
-      <SettingsPanel
+      {/* <SettingsPanel
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         settings={settings}
         onSettingsChange={setSettings}
-      />
+      /> */}
 
       <SwapReviewModal
         isOpen={isReviewOpen}

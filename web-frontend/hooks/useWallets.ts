@@ -74,10 +74,11 @@ export const useWallets = () => {
   // const isLoadingAleoTokenList = useRef(false);
   // Fetch Aleo token list
   const fetchAleoTokenList = useCallback(async () => {
-    if (!aleoAddress) return;
+    // if (!aleoAddress) return;
+    const network = aleoNetwork === null ? 'testnet' : aleoNetwork;
     try {
       const response = await fetch(
-        `https://api.explorer.provable.com/v2/${aleoNetwork}/tokens`
+        `https://api.explorer.provable.com/v2/${network}/tokens`
       );
       const data = await response.json();
       setAleoTokenList(data);
@@ -85,7 +86,7 @@ export const useWallets = () => {
       console.error('Failed to fetch Aleo token list:', error);
       setAleoTokenList(null);
     }
-  }, [aleoAddress, aleoNetwork]);
+  }, [aleoNetwork]);
   // https://api.provable.com/v2/mainnet/transactions/address/:address
 
   // Fetch Aleo balance
