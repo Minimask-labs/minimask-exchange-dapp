@@ -1,7 +1,6 @@
 import credits.aleo;
 
-// Aleo Jumper Bridge Contract
-// Handles cross-chain bridging with fee collection and destination tracking
+ // Handles cross-chain bridging with fee collection and destination tracking
 
 program minimask_exchange_bridge.aleo {
         @admin(address="aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8")

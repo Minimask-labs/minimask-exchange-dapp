@@ -1,7 +1,6 @@
 import credits.aleo;
 
-// Aleo Jumper Router Contract
-// This contract handles token swaps with platform fee collection
+ // This contract handles token swaps with platform fee collection
 // It takes a fee and forwards the remaining amount to a merchant (DEX or Bridge)
 
 program minimask_exchange_router.aleo {

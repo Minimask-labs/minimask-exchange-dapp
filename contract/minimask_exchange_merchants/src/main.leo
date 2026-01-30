@@ -1,7 +1,6 @@
 import credits.aleo;
 
-// Aleo Jumper Merchants Contract
-// Handles merchant liquidity registration and instant swaps
+ // Handles merchant liquidity registration and instant swaps
 
 program minimask_exchange_merchants.aleo {
         @admin(address="aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8")
