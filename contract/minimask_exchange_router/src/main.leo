@@ -6,7 +6,7 @@ import token_registry.aleo;
 
 program minimask_exchange_router.aleo {
     // Treasury address where platform fees are collected
-    const TREASURY: address = aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
+    const TREASURY: address = aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw;
     
     // Minimum fee in basis points (1 = 0.01%)
     const MIN_FEE_BPS: u64 = 10u64;
@@ -44,7 +44,7 @@ program minimask_exchange_router.aleo {
     }
     mapping pending_swaps: address => SwapCredit;
 
-@admin(address="aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8")
+@admin(address="aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw")
 async constructor() {}
     /**
      * @notice Step 1 of 2: User deposits native ALEO to swap for a Token.

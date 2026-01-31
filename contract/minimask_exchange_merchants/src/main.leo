@@ -3,11 +3,11 @@ import credits.aleo;
  // Handles merchant liquidity registration and instant swaps
 
 program minimask_exchange_merchants.aleo {
-        @admin(address="aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8")
+        @admin(address="aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw")
     async constructor() {}
 
     // Treasury for fee collection
-    const TREASURY: address = aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
+    const TREASURY: address = aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw;
     
     // Unstaking period in blocks (72 hours ~ 25920 blocks at 10s/block)
     const UNSTAKING_PERIOD: u32 = 25920u32;

@@ -88,7 +88,7 @@ function redeem_swap:
     input r2 as u128.public;
     call token_registry.aleo/transfer_public r0 self.signer r1 into r3;
     cast r2 into r4 as u64;
-    call credits.aleo/transfer_public aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8 r4 into r5;
+    call credits.aleo/transfer_public aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw r4 into r5;
     async redeem_swap self.signer r0 r1 r2 r3 r5 into r6;
     output r6 as minimask_exchange_router.aleo/redeem_swap.future;
 
@@ -116,7 +116,7 @@ function initialize_pool:
     input r2 as u128.public;
     input r3 as u16.public;
     input r4 as u16.public;
-    is.eq self.signer aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8 into r5;
+    is.eq self.signer aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw into r5;
     assert.eq r5 true;
     cast r1 into r6 as u64;
     call credits.aleo/transfer_public_as_signer minimask_exchange_router.aleo r6 into r7;
@@ -141,4 +141,4 @@ finalize initialize_pool:
     set r9 into pools[r0];
 
 constructor:
-    assert.eq program_owner aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
+    assert.eq program_owner aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw;
