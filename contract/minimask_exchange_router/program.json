@@ -9,6 +9,11 @@
       "name": "credits.aleo",   
       "location": "network",   
       "network": "testnet"
+    },
+    {
+      "name": "token_registry.aleo",   
+      "location": "network",   
+      "network": "testnet"
     }
   ],
   "dev_dependencies": null
