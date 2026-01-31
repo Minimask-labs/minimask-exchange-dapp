@@ -49,6 +49,13 @@ This is the primary router for the exchange. It is the main entry point for swap
 
 ### 2. `minimask_exchange_bridge.aleo`
 
+<!-- Broadcasted transaction with:
+  - transaction ID: 'at1z50kfu0r58lu7t9cj79plxne249lgka3yh3urk6rfnfvjdrcgggsu938x3'
+  - fee ID: 'au1htzea4pnpryg30dw9u3t4weat5hjqxflk4q85vaush3wvj4x9ggsh7kqt9'
+  - fee transaction ID: 'at1n0xmtrfm4xh79kfef2xyzylud8v3a8r7nunx8fnnkrz824jm6vzsa2khqe'
+ -->
+
+
 This contract facilitates the transfer of assets from Aleo to other blockchains.
 
 - **Functionality:**
