@@ -4,7 +4,7 @@ import merkle_tree.aleo;
 import test_usdcx_multisig_core.aleo;
 import test_usdcx_freezelist.aleo;
 import test_usdcx_stablecoin.aleo;
-program minimask_exchange_router.aleo;
+program minimask_exchange_router_v1.aleo;
 
 struct Pool:
     token_id as field;
@@ -61,7 +61,7 @@ function deposit_usdcx:
     input r2 as address.private;
     call test_usdcx_stablecoin.aleo/transfer_public_as_signer r2 r0 into r3;
     async deposit_usdcx self.signer 10field r0 r1 r3 into r4;
-    output r4 as minimask_exchange_router.aleo/deposit_usdcx.future;
+    output r4 as minimask_exchange_router_v1.aleo/deposit_usdcx.future;
 
 finalize deposit_usdcx:
     input r0 as address.public;
@@ -94,7 +94,7 @@ function deposit_aleo:
     cast r0 into r3 as u64;
     call credits.aleo/transfer_public_as_signer r2 r3 into r4;
     async deposit_aleo self.signer 0field r0 r1 r4 into r5;
-    output r5 as minimask_exchange_router.aleo/deposit_aleo.future;
+    output r5 as minimask_exchange_router_v1.aleo/deposit_aleo.future;
 
 finalize deposit_aleo:
     input r0 as address.public;
@@ -131,7 +131,7 @@ function deposit_registry_token:
     assert.eq r6 true;
     call token_registry.aleo/transfer_public_as_signer r0 r3 r1 into r7;
     async deposit_registry_token self.signer r0 r1 r2 r7 into r8;
-    output r8 as minimask_exchange_router.aleo/deposit_registry_token.future;
+    output r8 as minimask_exchange_router_v1.aleo/deposit_registry_token.future;
 
 finalize deposit_registry_token:
     input r0 as address.public;
@@ -166,7 +166,7 @@ function redeem_usdcx:
     call test_usdcx_stablecoin.aleo/transfer_public self.signer r4 into r5;
     cast r0 into r6 as u128;
     async redeem_usdcx self.signer 10field r6 r1 r3 r5 into r7;
-    output r7 as minimask_exchange_router.aleo/redeem_usdcx.future;
+    output r7 as minimask_exchange_router_v1.aleo/redeem_usdcx.future;
 
 finalize redeem_usdcx:
     input r0 as address.public;
@@ -192,7 +192,7 @@ function redeem_aleo:
     call credits.aleo/transfer_public self.signer r0 into r4;
     cast r0 into r5 as u128;
     async redeem_aleo self.signer 0field r5 r1 r3 r4 into r6;
-    output r6 as minimask_exchange_router.aleo/redeem_aleo.future;
+    output r6 as minimask_exchange_router_v1.aleo/redeem_aleo.future;
 
 finalize redeem_aleo:
     input r0 as address.public;
@@ -224,7 +224,7 @@ function redeem_registry_token:
     call token_registry.aleo/transfer_public r0 self.signer r8 into r9;
     cast r1 into r10 as u128;
     async redeem_registry_token self.signer r0 r10 r2 r7 r9 into r11;
-    output r11 as minimask_exchange_router.aleo/redeem_registry_token.future;
+    output r11 as minimask_exchange_router_v1.aleo/redeem_registry_token.future;
 
 finalize redeem_registry_token:
     input r0 as address.public;
@@ -249,11 +249,11 @@ function add_liquidity_usdcx:
     input r3 as u16.public;
     is.eq self.signer aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw into r4;
     assert.eq r4 true;
-    call credits.aleo/transfer_public_as_signer minimask_exchange_router.aleo r0 into r5;
-    call test_usdcx_stablecoin.aleo/transfer_public_as_signer minimask_exchange_router.aleo r1 into r6;
+    call credits.aleo/transfer_public_as_signer minimask_exchange_router_v1.aleo r0 into r5;
+    call test_usdcx_stablecoin.aleo/transfer_public_as_signer minimask_exchange_router_v1.aleo r1 into r6;
     cast r0 into r7 as u128;
     async add_liquidity_usdcx 10field r7 r1 r2 r3 r5 r6 into r8;
-    output r8 as minimask_exchange_router.aleo/add_liquidity_usdcx.future;
+    output r8 as minimask_exchange_router_v1.aleo/add_liquidity_usdcx.future;
 
 finalize add_liquidity_usdcx:
     input r0 as field.public;
@@ -284,11 +284,11 @@ function add_liquidity_registry:
     is.neq r0 0field into r7;
     and r6 r7 into r8;
     assert.eq r8 true;
-    call credits.aleo/transfer_public_as_signer minimask_exchange_router.aleo r1 into r9;
-    call token_registry.aleo/transfer_public_as_signer r0 minimask_exchange_router.aleo r2 into r10;
+    call credits.aleo/transfer_public_as_signer minimask_exchange_router_v1.aleo r1 into r9;
+    call token_registry.aleo/transfer_public_as_signer r0 minimask_exchange_router_v1.aleo r2 into r10;
     cast r1 into r11 as u128;
     async add_liquidity_registry r0 r11 r2 r3 r4 r9 r10 into r12;
-    output r12 as minimask_exchange_router.aleo/add_liquidity_registry.future;
+    output r12 as minimask_exchange_router_v1.aleo/add_liquidity_registry.future;
 
 finalize add_liquidity_registry:
     input r0 as field.public;
