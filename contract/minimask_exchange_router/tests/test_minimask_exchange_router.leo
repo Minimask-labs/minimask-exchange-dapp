@@ -1,5 +1,5 @@
 // The 'test_minimask_exchange_router' test program.
-import minimask_exchange_router.aleo;
+import minimask_exchange_router_v1.aleo;
 import credits.aleo;
 import token_registry.aleo;
 
@@ -12,7 +12,7 @@ program test_minimask_exchange_router.aleo {
         let aleo_in: u128 = 100u128; // This should trigger an error in the logic
         let min_out: u128 = 1u128;
 
-        let f: Future = minimask_exchange_router.aleo/deposit_aleo_for_swap(
+        let f: Future = minimask_exchange_router_v1.aleo/deposit_aleo_for_swap(
             usdcx_id,
             aleo_in,
             min_out
@@ -30,7 +30,7 @@ program test_minimask_exchange_router.aleo {
         let aleo_in: u128 = 100u128; // This should trigger an error in the logic
         let min_out: u128 = 1u128;
 
-        let f: Future = minimask_exchange_router.aleo/deposit_aleo_for_swap(
+        let f: Future = minimask_exchange_router_v1.aleo/deposit_aleo_for_swap(
             usdcx_id,
             aleo_in,
             min_out

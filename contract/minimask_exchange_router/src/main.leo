@@ -2,7 +2,7 @@ import credits.aleo;
 import token_registry.aleo;
 import test_usdcx_stablecoin.aleo;
 
-program minimask_exchange_router.aleo {
+program minimask_exchange_router_v1.aleo {
     const TREASURY: address = aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw;
     @admin(address="aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw")
     async constructor() {}
