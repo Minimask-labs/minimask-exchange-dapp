@@ -82,3 +82,5 @@ Swaps are executed in two steps to manage state transitions safely:
 2. **Import Requirements:** This program requires `credits.aleo`, `token_registry.aleo`, and `test_usdcx_stablecoin.aleo` to be deployed or available in your environment.
 3. **Build:** ```bash
 leo build
+
+<!-- contract address:  aleo1z3x9fxxu56helqe2jjk3zu3tk2yw8x3f7hf6uawvzqzatvxx75pqu08jc2 -->
