@@ -1,14 +1,13 @@
 import credits.aleo;
 
-// Aleo Jumper Bridge Contract
-// Handles cross-chain bridging with fee collection and destination tracking
+ // Handles cross-chain bridging with fee collection and destination tracking
 
 program minimask_exchange_bridge.aleo {
-        @admin(address="aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8")
+        @admin(address="aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw")
     async constructor() {}
 
     // Treasury address for fee collection
-    const TREASURY: address = aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
+    const TREASURY: address = aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw;
     
     // Bridge provider addresses (to be updated with real bridge addresses)
     const VERULINK_BRIDGE: address = aleo1verulink00000000000000000000000000000000000000000000000000;

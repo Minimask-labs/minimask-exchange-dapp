@@ -1,84 +1,85 @@
 'use client';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { Layout, PromoBanner } from '@/components/layout';
-import { GlassCard } from '@/components/ui/GlassCard';
-import { GradientButton } from '@/components/ui/GradientButton';
-import { IconButton } from '@/components/ui/IconButton';
-import { TokenIcon } from '@/components/ui/TokenIcon';
-import { Badge as CustomBadge } from '@/components/ui/custom-badge';
-import {
-  Settings,
-  History,
-  ChevronDown,
-  ArrowDown,
-  Fuel,
-  RefreshCw
-} from 'lucide-react';
-import { useState } from 'react';
-import {
-  mockTokens,
-  mockRoutes,
-  mockChains,
-  mockBridges,
-  mockExchanges
-} from '@/data/mockData';
-import { Token, SwapSettings, SwapRoute } from '@/types';
-import { TokenSelectorModal, SettingsPanel } from '@/components/exchange';
+// import { GlassCard } from '@/components/ui/GlassCard';
+// import { GradientButton } from '@/components/ui/GradientButton';
+// import { IconButton } from '@/components/ui/IconButton';
+// import { TokenIcon } from '@/components/ui/TokenIcon';
+// import { Badge as CustomBadge } from '@/components/ui/custom-badge';
+// import {
+//   Settings,
+//   History,
+//   ChevronDown,
+//   ArrowDown,
+//   Fuel,
+//   RefreshCw
+// } from 'lucide-react';
+// import { useState } from 'react';
+// import {
+//   mockTokens,
+//   mockRoutes,
+//   mockChains,
+//   mockBridges,
+//   mockExchanges
+// } from '@/data/mockData';
+// import { Token, SwapSettings, SwapRoute } from '@/types';
+// import { TokenSelectorModalTwo, SettingsPanel } from '@/components/exchange';
 
-const defaultSettings: SwapSettings = {
-  routePriority: 'best',
-  gasPrice: 'normal',
-  slippage: 'auto',
-  enabledBridges: mockBridges.filter((b) => b.enabled).map((b) => b.id),
-  enabledExchanges: mockExchanges.filter((e) => e.enabled).map((e) => e.id)
-};
+// const defaultSettings: SwapSettings = {
+//   routePriority: 'best',
+//   gasPrice: 'normal',
+//   slippage: 'auto',
+//   enabledBridges: mockBridges.filter((b) => b.enabled).map((b) => b.id),
+//   enabledExchanges: mockExchanges.filter((e) => e.enabled).map((e) => e.id)
+// // };
+import { SwapCard } from '@/components/exchange';
 
 export default function Home() {
-  const [fromToken, setFromToken] = useState<Token>(mockTokens[1]); // USDT
-  const [toToken, setToToken] = useState<Token>(mockTokens[9]); // SOL
-  const [amount, setAmount] = useState('100');
-  const [settings, setSettings] = useState<SwapSettings>(defaultSettings);
+  // const [fromToken, setFromToken] = useState<Token>(mockTokens[1]); // USDT
+  // const [toToken, setToToken] = useState<Token>(mockTokens[9]); // SOL
+  // const [amount, setAmount] = useState('100');
+  // const [settings, setSettings] = useState<SwapSettings>(defaultSettings);
 
-  // Modal states
-  const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
-  const [isToTokenModalOpen, setIsToTokenModalOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [showAllRoutes, setShowAllRoutes] = useState(false);
+  // // Modal states
+  // const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
+  // const [isToTokenModalOpen, setIsToTokenModalOpen] = useState(false);
+  // const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  // const [showAllRoutes, setShowAllRoutes] = useState(false);
 
-  const fromChain = mockChains.find((c) => c.id === fromToken?.chainId);
-  const toChain = mockChains.find((c) => c.id === toToken?.chainId);
+  // const fromChain = mockChains.find((c) => c.id === fromToken?.chainId);
+  // const toChain = mockChains.find((c) => c.id === toToken?.chainId);
 
-  const handleSwapTokens = () => {
-    const temp = fromToken;
-    setFromToken(toToken);
-    setToToken(temp);
-  };
+  // const handleSwapTokens = () => {
+  //   const temp = fromToken;
+  //   setFromToken(toToken);
+  //   setToToken(temp);
+  // };
 
-  const getBestRoute = (): SwapRoute => {
-    return mockRoutes[0];
-  };
+  // const getBestRoute = (): SwapRoute => {
+  //   return mockRoutes[0];
+  // };
 
-  const getTagVariant = (tag: string) => {
-    switch (tag) {
-      case 'Best Return':
-        return 'success';
-      case 'Fastest':
-        return 'warning';
-      case 'Cheapest':
-        return 'secondary';
-      default:
-        return 'default';
-    }
-  };
+  // const getTagVariant = (tag: string) => {
+  //   switch (tag) {
+  //     case 'Best Return':
+  //       return 'success';
+  //     case 'Fastest':
+  //       return 'warning';
+  //     case 'Cheapest':
+  //       return 'secondary';
+  //     default:
+  //       return 'default';
+  //   }
+  // };
 
   return (
     <Layout>
       <PromoBanner onCtaClick={() => {}} />
+    <SwapCard />
 
       {/* Exchange Card */}
-      <GlassCard className="p-4">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4">
+      {/* <GlassCard className="p-4">
+         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">Exchange</h2>
           <div className="flex items-center gap-1">
             <IconButton variant="ghost" size="sm">
@@ -95,9 +96,8 @@ export default function Home() {
         </div>
 
         {/* Token Selection */}
-        <div className="space-y-2 mb-4">
-          {/* From Token */}
-          <button
+        {/* <div className="space-y-2 mb-4">
+           <button
             onClick={() => setIsFromTokenModalOpen(true)}
             className="w-full p-3 rounded-xl bg-secondary hover:bg-secondary/80 transition-colors flex items-center justify-between"
           >
@@ -117,20 +117,20 @@ export default function Home() {
               </div>
             </div>
             <ChevronDown className="w-5 h-5 text-muted-foreground" />
-          </button>
+          </button> */}
 
           {/* Swap Arrow */}
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <button
               onClick={handleSwapTokens}
               className="w-8 h-8 rounded-full bg-card border border-minimask-border flex items-center justify-center hover:bg-secondary transition-colors"
             >
               <ArrowDown className="w-4 h-4" />
             </button>
-          </div>
+          </div> */}
 
           {/* To Token */}
-          <button
+          {/* <button
             onClick={() => setIsToTokenModalOpen(true)}
             className="w-full p-3 rounded-xl bg-secondary hover:bg-secondary/80 transition-colors flex items-center justify-between"
           >
@@ -149,10 +149,10 @@ export default function Home() {
             </div>
             <ChevronDown className="w-5 h-5 text-muted-foreground" />
           </button>
-        </div>
+        </div> */}
 
         {/* Amount Input */}
-        <div className="p-4 rounded-xl bg-secondary mb-4">
+        {/* <div className="p-4 rounded-xl bg-secondary mb-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-muted-foreground">Send</span>
             <span className="text-xs text-muted-foreground">
@@ -177,10 +177,10 @@ export default function Home() {
           <p className="text-sm text-muted-foreground mt-1">
             ≈ ${parseFloat(amount || '0').toFixed(2)}
           </p>
-        </div>
+        </div> */}
 
         {/* Routes */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm text-muted-foreground">Receive</span>
             <div className="flex items-center gap-2">
@@ -191,8 +191,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Best Route */}
-          <div className="p-3 rounded-xl bg-secondary/50 border border-primary/30 mb-2">
+           <div className="p-3 rounded-xl bg-secondary/50 border border-primary/30 mb-2">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <TokenIcon
@@ -220,8 +219,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* More Routes Toggle */}
-          {mockRoutes.length > 1 && (
+           {mockRoutes.length > 1 && (
             <button
               onClick={() => setShowAllRoutes(!showAllRoutes)}
               className="w-full text-center text-sm text-primary hover:text-primary/80 py-2"
@@ -231,8 +229,7 @@ export default function Home() {
             </button>
           )}
 
-          {/* Additional Routes */}
-          {showAllRoutes && (
+           {showAllRoutes && (
             <div className="space-y-2 mt-2">
               {mockRoutes.slice(1).map((route) => (
                 <div
@@ -280,16 +277,14 @@ export default function Home() {
               ))}
             </div>
           )}
-        </div>
+        </div>  
 
-        {/* Exchange Button */}
-        <GradientButton fullWidth size="lg">
+         <GradientButton fullWidth size="lg">
           Review Exchange
         </GradientButton>
-      </GlassCard>
+      </GlassCard> */}
 
-      {/* Token Selector Modals */}
-      <TokenSelectorModal
+       {/* <TokenSelectorModalTwo
         isOpen={isFromTokenModalOpen}
         onClose={() => setIsFromTokenModalOpen(false)}
         onSelect={setFromToken}
@@ -297,21 +292,21 @@ export default function Home() {
         title="Exchange from"
       />
 
-      <TokenSelectorModal
+      <TokenSelectorModalTwo
         isOpen={isToTokenModalOpen}
         onClose={() => setIsToTokenModalOpen(false)}
         onSelect={setToToken}
         selectedToken={toToken}
         title="Exchange to"
-      />
+      /> */}
 
       {/* Settings Panel */}
-      <SettingsPanel
+      {/* <SettingsPanel
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         settings={settings}
         onSettingsChange={setSettings}
-      />
+      /> */}
     </Layout>
   );
 }

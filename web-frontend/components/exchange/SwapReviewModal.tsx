@@ -2,16 +2,16 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { TokenIcon } from "@/components/ui/TokenIcon";
-import { Badge as CustomBadge } from "@/components/ui/custom-badge";
-import { SwapRoute, Chain } from "@/types";
-import { mockChains } from "@/data/mockData";
+// import { Badge as CustomBadge } from "@/components/ui/custom-badge";
+// import { SwapRoute, Chain } from "@/types";
+// import { mockChains } from "@/data/mockData";
 import { ArrowRight, Fuel, Clock, ChevronDown, ChevronUp, CheckCircle2, Loader2, XCircle, ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils";
 
 interface SwapReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
-  route: SwapRoute | null;
+  route: any | null;
   onConfirm: () => Promise<void>;
 }
 
@@ -30,15 +30,15 @@ const SwapReviewModal = ({
 
   if (!route) return null;
 
-  const fromChain = mockChains.find(c => c.id === route.fromToken.chainId);
-  const toChain = mockChains.find(c => c.id === route.toToken.chainId);
+  // const fromChain = mockChains.find(c => c.id === route?.fromToken?.chainId);
+  // const toChain = mockChains.find(c => c.id === route?.toToken?.chainId);
 
   const handleConfirm = async () => {
     try {
       setStatus("signing");
       await onConfirm();
       setStatus("pending");
-      
+      console.log('Transaction submitted', route);
       // Simulate transaction completion (in real app, would track tx)
       setTimeout(() => {
         setTxHash("0x1234...5678");
@@ -65,33 +65,35 @@ const SwapReviewModal = ({
     }
     return "🔄";
   };
+                  const aleoChain =
+                    'https://assets.coingecko.com/coins/images/27916/standard/secondary-icon-dark.png?1726770428"';
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent className="sm:max-w-[420px] bg-card border-jumper-border p-0 gap-0">
         <DialogHeader className="p-4 border-b border-jumper-border">
           <DialogTitle className="text-lg font-semibold">
-            {status === "review" && "Review Exchange"}
-            {status === "signing" && "Confirm in Wallet"}
-            {status === "pending" && "Transaction Pending"}
-            {status === "success" && "Exchange Complete!"}
-            {status === "error" && "Transaction Failed"}
+            {status === 'review' && 'Review Exchange'}
+            {status === 'signing' && 'Confirm in Wallet'}
+            {status === 'pending' && 'Transaction Pending'}
+            {status === 'success' && 'Exchange Complete!'}
+            {status === 'error' && 'Transaction Failed'}
           </DialogTitle>
         </DialogHeader>
 
         <div className="p-4">
           {/* Success State */}
-          {status === "success" && (
+          {status === 'success' && (
             <div className="text-center py-6">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-success/20 flex items-center justify-center">
                 <CheckCircle2 className="w-8 h-8 text-success" />
               </div>
               <p className="text-lg font-semibold mb-2">Exchange Successful!</p>
               <p className="text-sm text-muted-foreground mb-4">
-                You received {route.toAmount} {route.toToken.symbol}
+                You received {route?.toAmount} {route?.toToken?.symbol}
               </p>
               {txHash && (
-                <a 
+                <a
                   href={`https://etherscan.io/tx/${txHash}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -104,23 +106,27 @@ const SwapReviewModal = ({
           )}
 
           {/* Error State */}
-          {status === "error" && (
+          {status === 'error' && (
             <div className="text-center py-6">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-destructive/20 flex items-center justify-center">
                 <XCircle className="w-8 h-8 text-destructive" />
               </div>
               <p className="text-lg font-semibold mb-2">Transaction Failed</p>
-              <p className="text-sm text-muted-foreground mb-4">{errorMessage}</p>
+              <p className="text-sm text-muted-foreground mb-4">
+                {errorMessage}
+              </p>
             </div>
           )}
 
           {/* Signing State */}
-          {status === "signing" && (
+          {status === 'signing' && (
             <div className="text-center py-6">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
                 <Loader2 className="w-8 h-8 text-primary animate-spin" />
               </div>
-              <p className="text-lg font-semibold mb-2">Waiting for Confirmation</p>
+              <p className="text-lg font-semibold mb-2">
+                Waiting for Confirmation
+              </p>
               <p className="text-sm text-muted-foreground">
                 Please confirm the transaction in your wallet
               </p>
@@ -128,7 +134,7 @@ const SwapReviewModal = ({
           )}
 
           {/* Pending State */}
-          {status === "pending" && (
+          {status === 'pending' && (
             <div className="text-center py-6">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-warning/20 flex items-center justify-center">
                 <Loader2 className="w-8 h-8 text-warning animate-spin" />
@@ -141,7 +147,7 @@ const SwapReviewModal = ({
           )}
 
           {/* Review State */}
-          {status === "review" && (
+          {status === 'review' && (
             <>
               {/* Token Exchange Preview */}
               <div className="p-4 rounded-xl bg-secondary mb-4">
@@ -149,16 +155,18 @@ const SwapReviewModal = ({
                   {/* From */}
                   <div className="text-center">
                     <TokenIcon
-                      src={route.fromToken.icon}
-                      symbol={route.fromToken.symbol}
+                      src={route?.fromToken?.icon}
+                      symbol={route?.fromToken?.symbol}
                       size="lg"
-                      networkIcon={fromChain?.icon}
-                      networkName={fromChain?.name}
+                      networkIcon={aleoChain}
+                      networkName={'aleo'}
                       className="mx-auto mb-2"
                     />
-                    <p className="font-semibold">{route.fromAmount}</p>
-                    <p className="text-xs text-muted-foreground">{route.fromToken.symbol}</p>
-                    <p className="text-xs text-muted-foreground">{fromChain?.name}</p>
+                    <p className="font-semibold">{route?.fromAmount}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {route?.fromToken?.symbol}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{'aleo'}</p>
                   </div>
 
                   {/* Arrow */}
@@ -167,16 +175,20 @@ const SwapReviewModal = ({
                   {/* To */}
                   <div className="text-center">
                     <TokenIcon
-                      src={route.toToken.icon}
-                      symbol={route.toToken.symbol}
+                      src={route?.toToken?.icon}
+                      symbol={route?.toToken?.symbol}
                       size="lg"
-                      networkIcon={toChain?.icon}
-                      networkName={toChain?.name}
+                      networkIcon={aleoChain}
+                      networkName={'aleo'}
                       className="mx-auto mb-2"
                     />
-                    <p className="font-semibold">{route.toAmount}</p>
-                    <p className="text-xs text-muted-foreground">{route.toToken.symbol}</p>
-                    <p className="text-xs text-muted-foreground">{toChain?.name}</p>
+                    <p className="font-semibold">{route?.toAmount}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {route?.toToken?.symbol}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                     Aleo
+                    </p>
                   </div>
                 </div>
               </div>
@@ -186,24 +198,30 @@ const SwapReviewModal = ({
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Rate</span>
                   <span>
-                    1 {route.fromToken.symbol} ≈ {(parseFloat(route.toAmount) / parseFloat(route.fromAmount)).toFixed(6)} {route.toToken.symbol}
+                    1 {route?.fromToken?.symbol} ≈{' '}
+                    {(
+                      parseFloat(route?.toAmount) / parseFloat(route?.fromAmount)
+                    ).toFixed(6)}{' '}
+                    {route?.toToken?.symbol}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground flex items-center gap-1">
                     <Fuel className="w-3 h-3" /> Gas Cost
                   </span>
-                  <span>${route.gasCostUsd}</span>
+                  <span>${route?.gasCostUsd}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground flex items-center gap-1">
                     <Clock className="w-3 h-3" /> Estimated Time
                   </span>
-                  <span>{route.estimatedTime}</span>
+                  <span>{route?.estimatedTime}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">You Receive</span>
-                  <span className="text-success font-medium">≈ ${route.toAmountUsd}</span>
+                  <span className="text-success font-medium">
+                    ≈ ${route?.toAmountUsd}
+                  </span>
                 </div>
               </div>
 
@@ -212,7 +230,7 @@ const SwapReviewModal = ({
                 onClick={() => setShowSteps(!showSteps)}
                 className="w-full flex items-center justify-between p-3 rounded-xl bg-secondary/50 mb-4 text-sm"
               >
-                <span>Route ({route.steps.length} steps)</span>
+                <span>Route ({route?.steps?.length} steps)</span>
                 {showSteps ? (
                   <ChevronUp className="w-4 h-4 text-muted-foreground" />
                 ) : (
@@ -220,43 +238,48 @@ const SwapReviewModal = ({
                 )}
               </button>
 
-              {showSteps && (
+              {/* {showSteps && (
                 <div className="space-y-2 mb-4">
-                  {route.steps.map((step, index) => (
+                  {route?.steps?.map((step, index) => (
                     <div
                       key={index}
                       className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30"
                     >
-                      <span className="text-lg">{getStepIcon(step.type)}</span>
+                      <span className="text-lg">{getStepIcon(step?.type)}</span>
                       <div className="flex-1 text-sm">
                         <p className="font-medium">
-                          {step.type === "bridge" ? "Bridge" : "Swap"} via {step.provider}
+                          {step?.type === 'bridge' ? 'Bridge' : 'Swap'} via{' '}
+                          {step?.provider}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {step.fromToken} → {step.toToken}
+                          {step?.fromToken} → {step?.toToken}
                         </p>
                       </div>
                     </div>
                   ))}
                 </div>
-              )}
+              )} */}
             </>
           )}
 
           {/* Action Button */}
-          {status === "review" && (
+          {status === 'review' && (
             <GradientButton fullWidth size="lg" onClick={handleConfirm}>
               Confirm Exchange
             </GradientButton>
           )}
 
-          {status === "error" && (
-            <GradientButton fullWidth size="lg" onClick={() => setStatus("review")}>
+          {status === 'error' && (
+            <GradientButton
+              fullWidth
+              size="lg"
+              onClick={() => setStatus('review')}
+            >
               Try Again
             </GradientButton>
           )}
 
-          {status === "success" && (
+          {status === 'success' && (
             <GradientButton fullWidth size="lg" onClick={handleClose}>
               Done
             </GradientButton>

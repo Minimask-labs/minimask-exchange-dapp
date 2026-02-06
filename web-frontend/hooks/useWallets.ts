@@ -6,21 +6,20 @@ import { useState, useEffect, useCallback } from 'react';
 import { ConnectedWallet } from '@/types';
 import { formatUnits } from 'viem';
 import { useWallet as useAleoWallet } from '@provablehq/aleo-wallet-adaptor-react';
- import {
-    AleoNetworkClient
-
- } from '@provablehq/sdk';
+import { AleoNetworkClient } from '@provablehq/sdk';
 export const useWallets = () => {
-    // Access all aleo wallets state and methods
-  
-    const {
-      connected: aleoConnected, // boolean - whether wallet is connected
-      address: aleoAddress, // string | null - connected wallet address
-       wallet: aleoWallet, // Wallet | null - connected wallet adapter
-      disconnect: aleoDisconnect ,// () => Promise<void>
-       // ... other methods
-    } =  useAleoWallet();
-  
+  // Access all aleo wallets state and methods
+
+  const {
+    connected: aleoConnected, // boolean - whether wallet is connected
+    address: aleoAddress, // string | null - connected wallet address
+    wallet: aleoWallet, // Wallet | null - connected wallet adapter
+    disconnect: aleoDisconnect, // () => Promise<void>
+    network: aleoNetwork
+
+    // ... other methods
+  } = useAleoWallet();
+
   // EVM wallet state
   const {
     address: evmAddress,
@@ -40,6 +39,56 @@ export const useWallets = () => {
   const { connection } = useConnection();
   const [solanaBalance, setSolanaBalance] = useState<string | null>(null);
   const [aleoBalance, setAleoBalance] = useState<string | null>(null);
+  const [aleoTokenList, setAleoTokenList] = useState<{ data: any[] } | null>(
+    null
+  );
+ 
+     const networkClient = new AleoNetworkClient(
+      'https://api.explorer.provable.com/v2'
+    );
+  const getPublicTokenBalance = useCallback(
+    async (programId: string, address: string) => {
+      if (address == null) return '0';
+      try {
+        const result =
+          (
+            await networkClient.getProgramMappingValue(
+              programId,
+              'account',
+              address
+            )
+          )?.replace(/u\d+(?:\.public)?/g, '') ?? '0';
+        const publicBalance = BigInt(result);
+        console.log('publicBalance', publicBalance);
+        const balance = (Number(publicBalance) / 1_000_000).toFixed(6);
+        console.log('balance', balance);
+        return balance;
+      } catch (e) {
+        console.error(e);
+        return '0';
+      }
+    },
+    []
+  );
+  
+  // const isLoadingAleoTokenList = useRef(false);
+  // Fetch Aleo token list
+  const fetchAleoTokenList = useCallback(async () => {
+    // if (!aleoAddress) return;
+    const network = aleoNetwork === null ? 'testnet' : aleoNetwork;
+    try {
+      const response = await fetch(
+        `https://api.explorer.provable.com/v2/${network}/tokens`
+      );
+      const data = await response.json();
+      setAleoTokenList(data);
+    } catch (error) {
+      console.error('Failed to fetch Aleo token list:', error);
+      setAleoTokenList(null);
+    }
+  }, [aleoNetwork]);
+  // https://api.provable.com/v2/mainnet/transactions/address/:address
+
   // Fetch Aleo balance
   useEffect(() => {
     const fetchAleoBalance = async () => {
@@ -61,7 +110,6 @@ export const useWallets = () => {
               )
             )?.replace(/u\d+(?:\.public)?/g, '') ?? '0';
           const publicBalance = BigInt(publicBalanceString);
-          //  setAleoBalance(publicBalance);
           // console.log('Aleo Public Balance:', publicBalance);
           // Convert to readable format (Aleo has 6 decimals)
           const balanceInAleo = (Number(publicBalance) / 1_000_000).toFixed(6);
@@ -75,9 +123,9 @@ export const useWallets = () => {
       } else {
         setAleoBalance(null);
       }
-    }
-    fetchAleoBalance()
-  },[aleoAddress])
+    };
+    fetchAleoBalance();
+  }, [aleoAddress]);
   // Fetch Solana balance
   useEffect(() => {
     const fetchSolanaBalance = async () => {
@@ -129,8 +177,7 @@ export const useWallets = () => {
       icon: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/solana.svg'
     });
   }
-if (aleoConnected && aleoAddress) {
-
+  if (aleoConnected && aleoAddress) {
     connectedWallets.push({
       address: aleoAddress,
       type: 'aleo',
@@ -139,10 +186,11 @@ if (aleoConnected && aleoAddress) {
       name: aleoWallet?.adapter.name || 'Aleo',
       icon: aleoWallet?.adapter?.icon
     });
-}
-// console.log('Aleo Connected:', aleoConnected, aleoWallets, aleoAddress, 'Aleo Address:', aleoWallet);
+  }
+  // console.log('Aleo Connected:', aleoConnected, aleoWallets, aleoAddress, 'Aleo Address:', aleoWallet);
 
-  const isAnyWalletConnected = isEvmConnected || isSolanaConnected || aleoConnected;
+  const isAnyWalletConnected =
+    isEvmConnected || isSolanaConnected || aleoConnected;
 
   const disconnectWallet = useCallback(
     (address: string) => {
@@ -150,13 +198,20 @@ if (aleoConnected && aleoAddress) {
         disconnectEvm();
       } else if (solanaPublicKey?.toBase58() === address) {
         disconnectSolana();
-      }else if (aleoAddress === address) {
+      } else if (aleoAddress === address) {
         aleoDisconnect();
-      }else {
+      } else {
         console.warn('No connected wallet found with address:', address);
       }
     },
-    [evmAddress, solanaPublicKey, disconnectEvm, disconnectSolana,aleoDisconnect,aleoAddress]
+    [
+      evmAddress,
+      solanaPublicKey,
+      disconnectEvm,
+      disconnectSolana,
+      aleoDisconnect,
+      aleoAddress
+    ]
   );
 
   return {
@@ -169,6 +224,10 @@ if (aleoConnected && aleoAddress) {
     solanaAddress: solanaPublicKey?.toBase58(),
     disconnectWallet,
     disconnectEvm,
-    disconnectSolana
+    disconnectSolana,
+    aleoTokenList,
+    getPublicTokenBalance,
+    fetchAleoTokenList,
+    aleoAddress
   };
 };

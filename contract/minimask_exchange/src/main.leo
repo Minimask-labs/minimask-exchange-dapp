@@ -11,15 +11,15 @@ program minimask_exchange.aleo {
     //  - @checksum(mapping="credits.aleo/fixme", key="0field")
     //  - @custom
     // For more information, please refer to the documentation: `https://docs.leo-lang.org/guides/upgradability`
-    @admin(address="aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8")
+    @admin(address="aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw")
     async constructor() {}
 
 
     // Treasury address where platform fees are collected
-    const TREASURY: address = aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
+    const TREASURY: address = aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw;
     
     // Bridge provider addresses (to be updated with real bridge addresses)
-    const VERULINK_BRIDGE: address = aleo1h78z4pvqakm7660mhw5r4xjppp20t25wegtwgwqgw6ttg9mlf5rsn7zgx8;
+    const VERULINK_BRIDGE: address = aleo1l2lyqhh0n206drgzhw2a70atg7te8kgedlc2e9tjz0m0zr65nyysla8cnw;
     
     // Fee constants 
     // Minimum fee in basis points (1 = 0.01%)
